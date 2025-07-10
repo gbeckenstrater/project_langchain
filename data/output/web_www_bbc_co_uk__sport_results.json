@@ -1,0 +1,104 @@
+{
+  "source": "https://www.bbc.co.uk/sport",
+  "source_type": "url",
+  "analysis_metadata": {
+    "processed_at": "2025-07-10T11:59:48.667706",
+    "entities_count": 5,
+    "facts_count": 3
+  },
+  "structured_document": {
+    "title": "BBC Sport Document Analysis",
+    "summary": "This document analyzes a BBC Sport webpage, providing structured information on various sports news, scores, fixtures, and events.",
+    "entities": [
+      {
+        "name": "BBC",
+        "type": "organization",
+        "context": "main entity",
+        "confidence": 0.9
+      },
+      {
+        "name": "England",
+        "type": "team",
+        "context": "sports team",
+        "confidence": 0.8
+      },
+      {
+        "name": "India",
+        "type": "team",
+        "context": "sports team",
+        "confidence": 0.7
+      },
+      {
+        "name": "Lord's",
+        "type": "location",
+        "context": "venue",
+        "confidence": 0.6
+      },
+      {
+        "name": "UEFA Women's Euro",
+        "type": "tournament",
+        "context": "sports tournament",
+        "confidence": 0.9
+      }
+    ],
+    "facts": [
+      {
+        "statement": "England won the toss and batted first against India at Lord's.",
+        "category": "sports news",
+        "importance": 8,
+        "source_section": "Live"
+      },
+      {
+        "statement": "The Scottish Open day one saw Hill lead home tournament with Scheffler well placed.",
+        "category": "sports news",
+        "importance": 7,
+        "source_section": "Live"
+      },
+      {
+        "statement": "Tottenham agree \u00a355m fee for West Ham's Kudus.",
+        "category": "transfer news",
+        "importance": 6,
+        "source_section": "Transfer news"
+      }
+    ],
+    "topics": [
+      "Cricket",
+      "Golf",
+      "Football",
+      "Tennis",
+      "Boxing"
+    ],
+    "document_type": "article",
+    "processed_at": "2025-07-10 11:59:48.667706"
+  },
+  "analysis_result": {
+    "key_insights": [
+      "The document primarily focuses on sports news, scores, fixtures, and events from various sports categories.",
+      "There is a strong emphasis on the BBC Sport webpage's content, with detailed information provided for each entity mentioned.",
+      "The document includes factual statements about recent sports events, indicating a focus on current events."
+    ],
+    "sentiment_score": -0.2,
+    "complexity_score": 8,
+    "recommendations": [
+      "Consider incorporating more visual elements to enhance the user experience of the BBC Sport webpage.",
+      "Analyze the performance of individual entities (e.g., teams, locations) over time to identify trends and patterns.",
+      "Develop a system to track changes in sports news and scores in real-time, enabling users to access up-to-date information."
+    ],
+    "risk_factors": [
+      "Dependence on external data sources for accuracy and reliability",
+      "Potential for outdated or incorrect information due to the nature of sports events"
+    ],
+    "opportunities": [
+      "Exploring partnerships with sports organizations to enhance content and provide exclusive insights.",
+      "Investing in AI-powered tools to analyze and predict sports outcomes, improving user engagement."
+    ]
+  },
+  "webpage_metadata": {
+    "url": "https://www.bbc.co.uk/sport",
+    "title": "BBC Sport - Scores, Fixtures, News - Live Sport",
+    "description": "Sports news and live sports coverage including scores, results, video, audio and analysis on Football, F1, Cricket, Rugby Union and all other UK sports.",
+    "keywords": "",
+    "author": "",
+    "domain": "www.bbc.co.uk"
+  }
+}

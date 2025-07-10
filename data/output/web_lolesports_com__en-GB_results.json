@@ -1,0 +1,91 @@
+{
+  "source": "https://lolesports.com/en-GB/",
+  "source_type": "url",
+  "analysis_metadata": {
+    "processed_at": "2025-07-10T12:01:46.295782",
+    "entities_count": 3,
+    "facts_count": 3
+  },
+  "structured_document": {
+    "title": "League of Legends Esports Schedule",
+    "summary": "The document provides a schedule for League of Legends esports events, including regional splits, international tournaments, and leagues.",
+    "entities": [
+      {
+        "name": "Riot Games",
+        "type": "organization",
+        "context": "footer",
+        "confidence": 1.0
+      },
+      {
+        "name": "LEC Madrid",
+        "type": "location",
+        "context": "experience",
+        "confidence": 1.0
+      },
+      {
+        "name": "Worlds",
+        "type": "event",
+        "context": "tournament",
+        "confidence": 1.0
+      }
+    ],
+    "facts": [
+      {
+        "statement": "The esports season will run from January to October.",
+        "category": "timeframe",
+        "importance": 6,
+        "source_section": "schedule"
+      },
+      {
+        "statement": "The MSI tournament will take place from June 27th to July 12th.",
+        "category": "tournament",
+        "importance": 9,
+        "source_section": "schedule"
+      },
+      {
+        "statement": "The LEC Madrid Experience will be held on September 9th.",
+        "category": "event",
+        "importance": 7,
+        "source_section": "experience"
+      }
+    ],
+    "topics": [
+      "League of Legends Esports",
+      "Tournaments",
+      "Leagues"
+    ],
+    "document_type": "schedule",
+    "processed_at": "2025-07-10 12:01:46.295782"
+  },
+  "analysis_result": {
+    "key_insights": [
+      "The document provides a comprehensive schedule for League of Legends esports events, including regional splits, international tournaments, and leagues.",
+      "The esports season will run from January to October, with key events like the MSI tournament and LEC Madrid Experience.",
+      "The document has high confidence in its entities, facts, and topics, indicating a reliable source."
+    ],
+    "sentiment_score": -0.2,
+    "complexity_score": 8,
+    "recommendations": [
+      "Verify the accuracy of the schedule by cross-checking with official League of Legends esports sources.",
+      "Consider using this document as a reference for planning and organizing esports events.",
+      "Monitor the esports season's progress and adjust strategies accordingly."
+    ],
+    "risk_factors": [
+      "Inaccurate or outdated information in the document could lead to misplanning or misexecution of esports events.",
+      "Dependence on a single source for esports event schedules may not be sufficient, leading to potential gaps or inconsistencies."
+    ],
+    "opportunities": [
+      "Utilizing this document as a resource to improve esports event planning and organization.",
+      "Leveraging the League of Legends esports schedule to enhance fan engagement and experience.",
+      "Exploring opportunities for collaboration with Riot Games or other esports organizations using this document as a starting point."
+    ]
+  },
+  "webpage_metadata": {
+    "url": "https://lolesports.com/en-GB/",
+    "title": "LoL Esports | SCHEDULE",
+    "description": "The best place to watch LoL Esports and earn rewards!",
+    "keywords": "",
+    "author": "",
+    "domain": "lolesports.com"
+  }
+}

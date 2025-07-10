@@ -1,0 +1,89 @@
+{
+  "source": "data/input/OptimalProteinIntakeandFrequncy.pdf",
+  "source_type": "file",
+  "analysis_metadata": {
+    "processed_at": "2025-07-10T12:14:28.245579",
+    "entities_count": 4,
+    "facts_count": 3
+  },
+  "structured_document": {
+    "title": "Optimizing Protein Synthesis for Athletes",
+    "summary": "Athletes can benefit from consuming protein levels above the RDA to maximize muscle mass and strength. Maximization of protein synthesis (MPS) in response to a meal is dependent on consuming sufficient leucine.",
+    "entities": [
+      {
+        "name": "L.E. Norton",
+        "type": "person",
+        "context": "researcher",
+        "confidence": 0.9
+      },
+      {
+        "name": "d.K. Layman",
+        "type": "person",
+        "context": "researcher",
+        "confidence": 0.8
+      },
+      {
+        "name": "W.H.O.",
+        "type": "organization",
+        "context": "expert consultation",
+        "confidence": 0.7
+      },
+      {
+        "name": "FAO/UNU",
+        "type": "organization",
+        "context": "expert consultation",
+        "confidence": 0.6
+      }
+    ],
+    "facts": [
+      {
+        "statement": "The amino acid leucine is responsible for much of the anabolic properties of a meal.",
+        "category": "technical",
+        "importance": 9,
+        "source_section": "section 3"
+      },
+      {
+        "statement": "Consuming protein levels well above the RDA can benefit athletes looking to maximize muscle mass and strength.",
+        "category": "financial",
+        "importance": 8,
+        "source_section": "section 1"
+      },
+      {
+        "statement": "The amount of protein required at a meal to achieve maximum MPS will differ based on the leucine content of the protein source.",
+        "category": "technical",
+        "importance": 9,
+        "source_section": "section 4"
+      }
+    ],
+    "topics": [
+      "protein synthesis",
+      "athletes",
+      "leucine"
+    ],
+    "document_type": "article",
+    "processed_at": "2025-07-10 12:14:28.245579"
+  },
+  "analysis_result": {
+    "key_insights": [
+      "Consuming protein levels above the RDA can benefit athletes looking to maximize muscle mass and strength.",
+      "The amino acid leucine is responsible for much of the anabolic properties of a meal.",
+      "The amount of protein required at a meal to achieve maximum MPS will differ based on the leucine content of the protein source."
+    ],
+    "sentiment_score": -0.2,
+    "complexity_score": 6,
+    "recommendations": [
+      "Athletes should consider consulting with a registered dietitian or sports nutritionist to determine their individual protein needs.",
+      "Consuming high-quality protein sources that are rich in leucine can help maximize muscle protein synthesis.",
+      "Athletes may need to adjust their training and recovery strategies to accommodate increased protein intake."
+    ],
+    "risk_factors": [
+      "Overconsumption of protein, which can put a strain on the kidneys and liver.",
+      "Inadequate leucine content in protein sources, which can limit muscle protein synthesis."
+    ],
+    "opportunities": [
+      "Investing in research to better understand the relationship between protein intake and muscle growth.",
+      "Developing personalized nutrition plans for athletes based on their individual needs and goals.",
+      "Creating high-quality protein supplements that are rich in leucine and other essential amino acids."
+    ]
+  }
+}

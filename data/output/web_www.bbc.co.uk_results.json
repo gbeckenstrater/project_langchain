@@ -1,0 +1,91 @@
+{
+  "source": "https://www.bbc.co.uk/sport",
+  "type": "url",
+  "structured_document": {
+    "title": "BBC Sport Document Analysis",
+    "summary": "This document analyzes a BBC Sport webpage, providing structured information on various sports news, scores, fixtures, and events.",
+    "entities": [
+      {
+        "name": "BBC",
+        "type": "organization",
+        "context": "main entity",
+        "confidence": 1.0
+      },
+      {
+        "name": "England",
+        "type": "team",
+        "context": "sports team",
+        "confidence": 1.0
+      },
+      {
+        "name": "India",
+        "type": "team",
+        "context": "sports team",
+        "confidence": 1.0
+      },
+      {
+        "name": "Wimbledon",
+        "type": "tournament",
+        "context": "sports tournament",
+        "confidence": 1.0
+      },
+      {
+        "name": "UEFA Women's Euro",
+        "type": "tournament",
+        "context": "sports tournament",
+        "confidence": 1.0
+      }
+    ],
+    "facts": [
+      {
+        "statement": "England is playing against India in the third Test at Lord's.",
+        "category": "sports news",
+        "importance": 6,
+        "source_section": "live text"
+      },
+      {
+        "statement": "Wimbledon has been won by GB's Hewett.",
+        "category": "sports news",
+        "importance": 5,
+        "source_section": "watch Wimbledon"
+      },
+      {
+        "statement": "England is too strong for Wales.",
+        "category": "sports news",
+        "importance": 8,
+        "source_section": "UEFA Women's Euro"
+      }
+    ],
+    "topics": [
+      "Cricket",
+      "Tennis",
+      "Golf",
+      "Football",
+      "Boxing"
+    ],
+    "document_type": "article",
+    "processed_at": "2025-07-10 12:36:30.806464"
+  },
+  "analysis_result": {
+    "key_insights": [
+      "The document provides a comprehensive analysis of BBC Sport webpage, covering various sports news, scores, fixtures, and events.",
+      "The entities extracted from the document include organizations, teams, tournaments, and categories, indicating a structured approach to content analysis.",
+      "The facts section highlights specific sports news and tournament results, suggesting that the document is informative and up-to-date."
+    ],
+    "sentiment_score": -0.2,
+    "complexity_score": 7,
+    "recommendations": [
+      "Optimize the document's structure to improve readability and accessibility for users with disabilities.",
+      "Enhance the entity extraction process to include more nuanced categorization and confidence scoring.",
+      "Consider incorporating multimedia content, such as images or videos, to supplement the text-based analysis."
+    ],
+    "risk_factors": [
+      "Dependence on a single source of data (BBC Sport webpage) may limit the document's accuracy and relevance.",
+      "Over-reliance on manual entity extraction may lead to inconsistencies and errors in the analysis."
+    ],
+    "opportunities": [
+      "Integrating machine learning algorithms to automate entity extraction and improve accuracy.",
+      "Expanding the document's scope to include more sports categories or teams, increasing its relevance and appeal to a broader audience."
+    ]
+  }
+}
