@@ -1,0 +1,134 @@
+{
+  "source": "https://www.metasrc.com/tft/hyper/comp/techie-cyberboss",
+  "source_type": "url",
+  "quality_metadata": {
+    "quality_check_enabled": true,
+    "quality_acceptable": true,
+    "processed_at": "2025-07-23T16:01:14.137242",
+    "entities_count": 10,
+    "facts_count": 3
+  },
+  "structured_document": {
+    "title": "TFT Hyper Roll Techie Cyberboss Comp Guide Set 14 14.8",
+    "summary": "A guide for a specific TFT (Teamfight Tactics) comp, providing item prioritization and build options.",
+    "entities": [
+      {
+        "name": "METAsrc",
+        "type": "organization",
+        "context": "source of the guide",
+        "confidence": 0.9
+      },
+      {
+        "name": "Poppy",
+        "type": "person",
+        "context": "champion in the comp",
+        "confidence": 0.8
+      },
+      {
+        "name": "Seraphine",
+        "type": "person",
+        "context": "champion in the comp",
+        "confidence": 0.8
+      },
+      {
+        "name": "Zyra",
+        "type": "person",
+        "context": "champion in the comp",
+        "confidence": 0.8
+      },
+      {
+        "name": "Shyvana",
+        "type": "person",
+        "context": "champion in the comp",
+        "confidence": 0.8
+      },
+      {
+        "name": "Veigar",
+        "type": "person",
+        "context": "champion in the comp",
+        "confidence": 0.8
+      },
+      {
+        "name": "Fiddlesticks",
+        "type": "person",
+        "context": "champion in the comp",
+        "confidence": 0.8
+      },
+      {
+        "name": "Mordekaiser",
+        "type": "person",
+        "context": "champion in the comp",
+        "confidence": 0.8
+      },
+      {
+        "name": "Ziggs",
+        "type": "person",
+        "context": "champion in the comp",
+        "confidence": 0.8
+      },
+      {
+        "name": "Kobuko",
+        "type": "person",
+        "context": "champion in the comp",
+        "confidence": 0.8
+      }
+    ],
+    "facts": [
+      {
+        "statement": "This guide is for TFT Hyper Roll Techie Cyberboss Comp Guide Set 14 14.8.",
+        "category": "description",
+        "importance": 5,
+        "source_section": "title"
+      },
+      {
+        "statement": "The comp has a God/S+ average place of 4.32 and a Top 445% win rate.",
+        "category": "statistics",
+        "importance": 9,
+        "source_section": "comp stats"
+      },
+      {
+        "statement": "The guide provides item prioritization for the comp.",
+        "category": "item prioritization",
+        "importance": 8,
+        "source_section": "build options"
+      }
+    ],
+    "topics": [
+      "TFT Hyper Roll Techie Cyberboss Comp Guide Set 14 14.8",
+      "item prioritization",
+      "build options"
+    ],
+    "document_type": "guide",
+    "processed_at": "2025-07-23 16:01:14.137242"
+  },
+  "analysis_result": {
+    "key_insights": [
+      "The guide provides item prioritization for the TFT Hyper Roll Techie Cyberboss Comp Guide Set 14 14.8, which is a crucial aspect of the comp.",
+      "The comp has a God/S+ average place of 4.32 and a Top 445% win rate, indicating a high level of difficulty.",
+      "The guide's confidence score for its entities is relatively high, with METAsrc scoring 0.9 and most champion entries scoring 0.8."
+    ],
+    "sentiment_score": -0.2,
+    "complexity_score": 7,
+    "recommendations": [
+      "Consider updating the guide to reflect any changes in item prioritization or comp strategies since its last update.",
+      "Provide more detailed information on how to build around champion synergies and item interactions.",
+      "Include additional statistics, such as win rates for different champion combinations, to help players make informed decisions."
+    ],
+    "risk_factors": [
+      "Dependence on outdated information: The guide's processing time is from 2025-07-23T16:01:14.137242, which may not reflect the current meta.",
+      "Lack of diversity in champion representation: The guide focuses primarily on champions with high confidence scores, potentially overlooking less popular or more niche options."
+    ],
+    "opportunities": [
+      "Integration with other tools and resources: Consider integrating this guide with other TFT tools and resources to provide a more comprehensive experience for players.",
+      "Community engagement: Encourage community feedback and discussion around the guide to help improve its accuracy and relevance over time."
+    ]
+  },
+  "webpage_metadata": {
+    "url": "https://www.metasrc.com/tft/hyper/comp/techie-cyberboss",
+    "title": "TFT Hyper Roll Techie Cyberboss Comp Guide Set 14 14.8    - METAsrc",
+    "description": "Statistical TFT Hyper Roll Hyper Roll  Techie Cyberboss Comp Guide, best champions, item guide, carries, early and late options, spatulas. Set 14, 14.8.",
+    "keywords": "",
+    "author": "",
+    "domain": "www.metasrc.com"
+  }
+}
