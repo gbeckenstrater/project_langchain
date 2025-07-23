@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
-Command Line Interface for LangChain Multi-Source Analysis with Data Quality Validation
+Command Line Interface for LangChain Multi-Source Analysis
 Usage examples:
   python cli_analyzer.py --url https://www.bbc.co.uk/sport
-  python cli_analyzer.py --file "data/input/document.pdf" --no-quality-check
-  python cli_analyzer.py --batch urls.txt --strict-quality
+  python cli_analyzer.py --file "data/input/document.pdf"
+  python cli_analyzer.py --batch urls.txt
   python cli_analyzer.py --interactive
 """
 
@@ -24,31 +24,25 @@ sys.path.append(str(Path(__file__).parent))
 
 from config import Config
 from utils.file_processor import FileProcessor
-from chains.extraction_chain import EnhancedDocumentExtractionChain
+from chains.extraction_chain import DocumentExtractionChain
 from chains.analysis_chain import DocumentAnalysisChain
-from chains.data_quality_agent import DataQualityAgent, QualityScore
 from models.data_models import StructuredDocument, AnalysisResult
 
 console = Console()
 
-class EnhancedCLIAnalyzer:
-    """Enhanced CLI analyzer with data quality validation"""
+class CLIAnalyzer:
+    """Command-line interface for document and web analysis"""
     
-    def __init__(self, enable_quality_check: bool = True, strict_quality: bool = False):
+    def __init__(self):
         self.file_processor = FileProcessor()
-        self.extraction_chain = EnhancedDocumentExtractionChain(enable_quality_check=enable_quality_check)
+        self.extraction_chain = DocumentExtractionChain()
         self.analysis_chain = DocumentAnalysisChain()
-        self.quality_agent = DataQualityAgent() if enable_quality_check else None
-        self.strict_quality = strict_quality  # If True, reject low-quality data
         
         # Ensure output directory exists
         os.makedirs(Config.OUTPUT_DIR, exist_ok=True)
     
-    def analyze_source(self, source: str, verbose: bool = True) -> tuple[StructuredDocument, AnalysisResult, bool]:
-        """
-        Analyze a single source with quality validation
-        Returns: (StructuredDocument, AnalysisResult, quality_acceptable)
-        """
+    def analyze_source(self, source: str, verbose: bool = True) -> tuple[StructuredDocument, AnalysisResult]:
+        """Analyze a single source (file or URL)"""
         
         source_type = "URL" if self.file_processor._is_url(source) else "File"
         
@@ -66,43 +60,28 @@ class EnhancedCLIAnalyzer:
             if verbose:
                 console.print(f"✅ Extracted {len(content)} characters")
             
-            # Extract structured data with quality check
+            # Extract structured data
             if verbose:
-                with console.status("[green]Extracting and validating data..."):
-                    structured_doc, quality_ok = self.extraction_chain.extract_with_quality_check(content)
+                with console.status("[green]Extracting structured data..."):
+                    structured_doc = self.extraction_chain.extract(content)
             else:
-                structured_doc, quality_ok = self.extraction_chain.extract_with_quality_check(content)
+                structured_doc = self.extraction_chain.extract(content)
             
-            # Check if we should proceed with low quality data
-            if not quality_ok and self.strict_quality:
-                raise ValueError("Data quality is below acceptable threshold (strict mode enabled)")
-            
-            # Analyze data (only if quality is acceptable or we're not in strict mode)
-            if quality_ok or not self.strict_quality:
-                if verbose:
-                    with console.status("[green]Analyzing content..."):
-                        analysis_result = self.analysis_chain.analyze(structured_doc)
-                else:
+            # Analyze data
+            if verbose:
+                with console.status("[green]Analyzing content..."):
                     analysis_result = self.analysis_chain.analyze(structured_doc)
             else:
-                # Create minimal analysis result for low quality data
-                analysis_result = AnalysisResult(
-                    key_insights=["⚠️ Data quality issues detected - analysis may be unreliable"],
-                    sentiment_score=0.0,
-                    complexity_score=1,
-                    recommendations=["Manual review recommended due to data quality issues"],
-                    risk_factors=["Low data quality may lead to incorrect insights"],
-                    opportunities=["Improve data extraction process"]
-                )
+                analysis_result = self.analysis_chain.analyze(structured_doc)
             
-            return structured_doc, analysis_result, quality_ok
+            return structured_doc, analysis_result
             
         except Exception as e:
             console.print(f"[red]❌ Error analyzing {source}: {e}[/red]")
             raise
     
-    def save_results(self, source: str, structured_doc: StructuredDocument, analysis_result: AnalysisResult, quality_ok: bool = True):
-        """Save analysis results with quality metadata"""
+    def save_results(self, source: str, structured_doc: StructuredDocument, analysis_result: AnalysisResult):
+        """Save analysis results to JSON file"""
         
         # Create safe filename
         if self.file_processor._is_url(source):
@@ -115,13 +94,11 @@ class EnhancedCLIAnalyzer:
         
         output_file = Path(Config.OUTPUT_DIR) / f"{safe_name}_results.json"
         
-        # Prepare results data with quality metadata
+        # Prepare results data
         results = {
             "source": source,
             "source_type": "url" if self.file_processor._is_url(source) else "file",
-            "quality_metadata": {
-                "quality_check_enabled": self.quality_agent is not None,
-                "quality_acceptable": quality_ok,
+            "analysis_metadata": {
                 "processed_at": structured_doc.processed_at.isoformat(),
                 "entities_count": len(structured_doc.entities),
                 "facts_count": len(structured_doc.facts)
@@ -143,19 +120,17 @@ class EnhancedCLIAnalyzer:
         
         return output_file
     
-    def display_summary(self, source: str, structured_doc: StructuredDocument, analysis_result: AnalysisResult, quality_ok: bool = True):
-        """Display analysis summary with quality indicators"""
+    def display_summary(self, source: str, structured_doc: StructuredDocument, analysis_result: AnalysisResult):
+        """Display analysis summary"""
         
         source_type = "🌐" if self.file_processor._is_url(source) else "📄"
-        quality_emoji = "✅" if quality_ok else "⚠️"
         
         # Main results table
-        table = Table(title=f"{source_type} Analysis Summary {quality_emoji}")
+        table = Table(title=f"{source_type} Analysis Summary")
         table.add_column("Metric", style="cyan")
         table.add_column("Value", style="magenta")
         
         table.add_row("Source", source)
-        table.add_row("Data Quality", "✅ Good" if quality_ok else "⚠️ Issues Detected")
         table.add_row("Title", structured_doc.title)
         table.add_row("Type", structured_doc.document_type)
         table.add_row("Entities", str(len(structured_doc.entities)))
@@ -165,15 +140,6 @@ class EnhancedCLIAnalyzer:
         table.add_row("Complexity", f"{analysis_result.complexity_score}/10")
         
         console.print(table)
-        
-        # Quality warning if needed
-        if not quality_ok:
-            console.print(Panel(
-                "⚠️ Data quality issues detected. Results may be unreliable.\n"
-                "Consider manual review or re-processing with different parameters.", 
-                title="🚨 Quality Warning", 
-                border_style="red"
-            ))
         
         # Key insights
         if analysis_result.key_insights:
@@ -186,12 +152,11 @@ class EnhancedCLIAnalyzer:
             console.print(Panel(rec_text, title="🎯 Recommendations", border_style="blue"))
     
     def interactive_mode(self):
-        """Interactive command-line mode with quality options"""
+        """Interactive command-line mode"""
         
         console.print(Panel.fit(
-            "[bold blue]🔗 Enhanced Interactive Analysis Mode[/bold blue]\n"
-            "[green]Enter sources to analyze (type 'quit' to exit)[/green]\n"
-            "[yellow]Quality checking is enabled by default[/yellow]",
+            "[bold blue]🔗 Interactive Analysis Mode[/bold blue]\n"
+            "[green]Enter sources to analyze (type 'quit' to exit)[/green]",
             border_style="blue"
         ))
         
@@ -206,14 +171,14 @@ class EnhancedCLIAnalyzer:
                 if not source:
                     continue
                 
-                # Analyze source with quality check
-                structured_doc, analysis_result, quality_ok = self.analyze_source(source)
+                # Analyze source
+                structured_doc, analysis_result = self.analyze_source(source)
                 
                 # Display results
-                self.display_summary(source, structured_doc, analysis_result, quality_ok)
+                self.display_summary(source, structured_doc, analysis_result)
                 
                 # Save results
-                output_file = self.save_results(source, structured_doc, analysis_result, quality_ok)
+                output_file = self.save_results(source, structured_doc, analysis_result)
                 console.print(f"[green]💾 Saved to: {output_file}[/green]")
                 
             except KeyboardInterrupt:
@@ -223,47 +188,27 @@ class EnhancedCLIAnalyzer:
                 console.print(f"[red]❌ Error: {e}[/red]")
     
     def batch_analyze(self, sources: List[str], save_results: bool = True):
-        """Analyze multiple sources with quality tracking"""
+        """Analyze multiple sources"""
         
         results = []
-        quality_stats = {"good": 0, "poor": 0, "total": 0}
         
         with Progress() as progress:
             task = progress.add_task("[green]Processing sources...", total=len(sources))
             
             for source in sources:
                 try:
-                    structured_doc, analysis_result, quality_ok = self.analyze_source(source, verbose=False)
-                    results.append((source, structured_doc, analysis_result, quality_ok))
-                    
-                    # Update quality stats
-                    quality_stats["total"] += 1
-                    if quality_ok:
-                        quality_stats["good"] += 1
-                    else:
-                        quality_stats["poor"] += 1
+                    structured_doc, analysis_result = self.analyze_source(source, verbose=False)
+                    results.append((source, structured_doc, analysis_result))
                     
                     if save_results:
-                        self.save_results(source, structured_doc, analysis_result, quality_ok)
+                        self.save_results(source, structured_doc, analysis_result)
                     
-                    status = "✅" if quality_ok else "⚠️"
-                    console.print(f"{status} {source}")
+                    console.print(f"✅ {source}")
                     
                 except Exception as e:
                     console.print(f"❌ {source}: {e}")
-                    quality_stats["total"] += 1
-                    quality_stats["poor"] += 1
                 
                 progress.update(task, advance=1)
-        
-        # Print quality summary
-        if quality_stats["total"] > 0:
-            good_pct = (quality_stats["good"] / quality_stats["total"]) * 100
-            console.print(Panel(
-                f"Quality Summary: {quality_stats['good']}/{quality_stats['total']} sources passed quality checks ({good_pct:.1f}%)",
-                title="📊 Batch Quality Report",
-                border_style="blue"
-            ))
         
         return results
 
@@ -278,16 +223,16 @@ def load_sources_from_file(file_path: str) -> List[str]:
         return []
 
 def main():
-    """Main CLI function with quality check options"""
+    """Main CLI function"""
     
     parser = argparse.ArgumentParser(
-        description="LangChain Multi-Source Analysis Tool with Data Quality Validation",
+        description="LangChain Multi-Source Analysis Tool",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
   %(prog)s --url https://www.bbc.co.uk/sport
-  %(prog)s --file "document.pdf" --no-quality-check
-  %(prog)s --batch sources.txt --strict-quality
+  %(prog)s --file "data/input/document.pdf"
+  %(prog)s --batch sources.txt
   %(prog)s --interactive
   %(prog)s --url https://techcrunch.com --no-save
         """
@@ -298,27 +243,17 @@ Examples:
     parser.add_argument('--batch', '-b', help='Batch analyze sources from file (one per line)')
     parser.add_argument('--interactive', '-i', action='store_true', help='Interactive mode')
     parser.add_argument('--no-save', action='store_true', help='Don\'t save results to file')
-    parser.add_argument('--no-quality-check', action='store_true', help='Disable data quality validation')
-    parser.add_argument('--strict-quality', action='store_true', help='Reject sources with poor data quality')
     parser.add_argument('--quiet', '-q', action='store_true', help='Minimal output')
     
     args = parser.parse_args()
     
-    # Initialize analyzer with quality settings
-    enable_quality = not args.no_quality_check
-    analyzer = EnhancedCLIAnalyzer(
-        enable_quality_check=enable_quality,
-        strict_quality=args.strict_quality
-    )
+    # Initialize analyzer
+    analyzer = CLIAnalyzer()
     
     if not args.quiet:
-        quality_status = "✅ Enabled" if enable_quality else "⚠️ Disabled"
-        strict_status = " (Strict Mode)" if args.strict_quality else ""
-        
         console.print(Panel.fit(
-            f"[bold blue]🔗 Enhanced LangChain Multi-Source Analyzer[/bold blue]\n"
-            f"[green]📄 Files • 🌐 Websites • 📊 Analysis[/green]\n"
-            f"[yellow]🔍 Data Quality Checks: {quality_status}{strict_status}[/yellow]",
+            "[bold blue]🔗 LangChain Multi-Source Analyzer[/bold blue]\n"
+            "[green]📄 Files • 🌐 Websites • 📊 Analysis[/green]",
             border_style="blue"
         ))
     
@@ -328,13 +263,13 @@ Examples:
         
         elif args.url:
             # Analyze single URL
-            structured_doc, analysis_result, quality_ok = analyzer.analyze_source(args.url, not args.quiet)
+            structured_doc, analysis_result = analyzer.analyze_source(args.url, not args.quiet)
             
             if not args.quiet:
-                analyzer.display_summary(args.url, structured_doc, analysis_result, quality_ok)
+                analyzer.display_summary(args.url, structured_doc, analysis_result)
             
             if not args.no_save:
-                output_file = analyzer.save_results(args.url, structured_doc, analysis_result, quality_ok)
+                output_file = analyzer.save_results(args.url, structured_doc, analysis_result)
                 if not args.quiet:
                     console.print(f"[green]💾 Results saved to: {output_file}[/green]")
         
@@ -344,13 +279,13 @@ Examples:
                 console.print(f"[red]❌ File not found: {args.file}[/red]")
                 return 1
             
-            structured_doc, analysis_result, quality_ok = analyzer.analyze_source(args.file, not args.quiet)
+            structured_doc, analysis_result = analyzer.analyze_source(args.file, not args.quiet)
             
             if not args.quiet:
-                analyzer.display_summary(args.file, structured_doc, analysis_result, quality_ok)
+                analyzer.display_summary(args.file, structured_doc, analysis_result)
             
             if not args.no_save:
-                output_file = analyzer.save_results(args.file, structured_doc, analysis_result, quality_ok)
+                output_file = analyzer.save_results(args.file, structured_doc, analysis_result)
                 if not args.quiet:
                     console.print(f"[green]💾 Results saved to: {output_file}[/green]")
         
@@ -368,8 +303,7 @@ Examples:
             results = analyzer.batch_analyze(sources, not args.no_save)
             
             if not args.quiet:
-                successful = sum(1 for r in results if len(r) >= 3)
-                console.print(f"[green]✅ Completed: {successful} successful analyses[/green]")
+                console.print(f"[green]✅ Completed: {len(results)} successful analyses[/green]")
         
         else:
             # No arguments provided, show help

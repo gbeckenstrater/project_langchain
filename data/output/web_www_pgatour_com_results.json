@@ -1,0 +1,174 @@
+{
+  "source": "https://www.pgatour.com/",
+  "source_type": "url",
+  "analysis_metadata": {
+    "processed_at": "2025-07-22T16:30:45.792865",
+    "entities_count": 17,
+    "facts_count": 3
+  },
+  "structured_document": {
+    "title": "PGA TOUR Official Leaderboard",
+    "summary": "The official leaderboard for the PGA TOUR, including player rankings, scores, and tournament information.",
+    "entities": [
+      {
+        "name": "Scheffler",
+        "type": "person",
+        "context": "leaderboard ranking",
+        "confidence": 0.9
+      },
+      {
+        "name": "English",
+        "type": "person",
+        "context": "leaderboard ranking",
+        "confidence": 0.8
+      },
+      {
+        "name": "Gotterup",
+        "type": "person",
+        "context": "leaderboard ranking",
+        "confidence": 0.7
+      },
+      {
+        "name": "Clark",
+        "type": "person",
+        "context": "leaderboard ranking",
+        "confidence": 0.9
+      },
+      {
+        "name": "Fitzpatrick",
+        "type": "person",
+        "context": "leaderboard ranking",
+        "confidence": 0.8
+      },
+      {
+        "name": "Li",
+        "type": "person",
+        "context": "leaderboard ranking",
+        "confidence": 0.7
+      },
+      {
+        "name": "MacIntyre",
+        "type": "person",
+        "context": "leaderboard ranking",
+        "confidence": 0.9
+      },
+      {
+        "name": "Schauffele",
+        "type": "person",
+        "context": "leaderboard ranking",
+        "confidence": 0.8
+      },
+      {
+        "name": "McIlroy",
+        "type": "person",
+        "context": "leaderboard ranking",
+        "confidence": 0.7
+      },
+      {
+        "name": "DeChambeau",
+        "type": "person",
+        "context": "leaderboard ranking",
+        "confidence": 0.9
+      },
+      {
+        "name": "Conners",
+        "type": "person",
+        "context": "leaderboard ranking",
+        "confidence": 0.8
+      },
+      {
+        "name": "Harman",
+        "type": "person",
+        "context": "leaderboard ranking",
+        "confidence": 0.7
+      },
+      {
+        "name": "Henley",
+        "type": "person",
+        "context": "leaderboard ranking",
+        "confidence": 0.9
+      },
+      {
+        "name": "Fowler",
+        "type": "person",
+        "context": "leaderboard ranking",
+        "confidence": 0.8
+      },
+      {
+        "name": "H\u00f8jgaard",
+        "type": "person",
+        "context": "leaderboard ranking",
+        "confidence": 0.7
+      },
+      {
+        "name": "PGA TOUR",
+        "type": "organization",
+        "context": "official website",
+        "confidence": 1.0
+      },
+      {
+        "name": "FedExCup",
+        "type": "concept",
+        "context": "tournament name",
+        "confidence": 1.0
+      }
+    ],
+    "facts": [
+      {
+        "statement": "The PGA TOUR is the official governing body of professional golf in the United States.",
+        "category": "organization",
+        "importance": 9,
+        "source_section": "Introduction"
+      },
+      {
+        "statement": "The FedExCup is a prestigious tournament that crowns the winner of the PGA TOUR season.",
+        "category": "tournament",
+        "importance": 8,
+        "source_section": "Tournament Information"
+      },
+      {
+        "statement": "Scheffler has the lowest total score in the current leaderboard ranking.",
+        "category": "leaderboard ranking",
+        "importance": 6,
+        "source_section": "Leaderboard"
+      }
+    ],
+    "topics": [
+      "PGA TOUR",
+      "FedExCup",
+      "Golf Leaderboard"
+    ],
+    "document_type": "website",
+    "processed_at": "2025-07-22 16:30:45.792865"
+  },
+  "analysis_result": {
+    "key_insights": [
+      "The PGA TOUR Official Leaderboard provides a comprehensive overview of the current leaderboard ranking, including player rankings, scores, and tournament information.",
+      "The document highlights the importance of the FedExCup as a prestigious tournament that crowns the winner of the PGA TOUR season.",
+      "The leaderboards are ranked with high confidence, indicating a strong level of accuracy in the data."
+    ],
+    "sentiment_score": 0.8,
+    "complexity_score": 6,
+    "recommendations": [
+      "Regularly update the leaderboard to ensure accuracy and reflect changes in player rankings.",
+      "Consider incorporating additional data sources to enhance the credibility of the leaderboard.",
+      "Develop a strategy for analyzing and visualizing the leaderboard data to facilitate better decision-making."
+    ],
+    "risk_factors": [
+      "Dependence on data quality: The accuracy of the leaderboard ranking is heavily reliant on the quality of the data provided.",
+      "Limited scope: The document primarily focuses on the PGA TOUR Official Leaderboard, which may not capture the full scope of golf-related information."
+    ],
+    "opportunities": [
+      "Expansion into new markets: The PGA TOUR has a significant global presence, offering opportunities for expansion into new markets and demographics.",
+      "Incorporating AI-powered analysis: Leveraging artificial intelligence to analyze and provide insights on the leaderboard data could enhance its value proposition."
+    ]
+  },
+  "webpage_metadata": {
+    "url": "https://www.pgatour.com/",
+    "title": "PGATOUR.COM - Official Home of Golf and the FedExCup - PGA TOUR",
+    "description": "The official web site of the PGA TOUR. Providing the only Real-Time Live Scoring for the PGA TOUR, Champions Tour and Korn Ferry Tour. Home of official PGA TOUR",
+    "keywords": "",
+    "author": "",
+    "domain": "www.pgatour.com"
+  }
+}

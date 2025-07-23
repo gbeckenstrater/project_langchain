@@ -1,25 +1,19 @@
 from langchain.chains import LLMChain
 from langchain.prompts import PromptTemplate
 from langchain_community.llms import Ollama
+from langchain.output_parsers import PydanticOutputParser
 from models.data_models import StructuredDocument, ExtractedEntity, ExtractedFact
-from chains.data_quality_agent import DataQualityAgent, QualityScore
 from config import Config
 import json
 import re
 
-class EnhancedDocumentExtractionChain:
-    """Enhanced extraction chain with built-in data quality validation"""
-    
-    def __init__(self, enable_quality_check: bool = True):
+class DocumentExtractionChain:
+    def __init__(self):
         self.llm = Ollama(
             model=Config.EXTRACTION_MODEL,
             base_url=Config.OLLAMA_BASE_URL,
             temperature=0.1
         )
-        
-        self.enable_quality_check = enable_quality_check
-        if enable_quality_check:
-            self.quality_agent = DataQualityAgent()
         
         self.extraction_prompt = PromptTemplate(
             input_variables=["text"],
@@ -76,8 +70,10 @@ class EnhancedDocumentExtractionChain:
     def extract_json_from_response(self, response: str) -> dict:
         """Extract JSON from potentially messy LLM response"""
         try:
+            # First, try direct JSON parsing
             return json.loads(response)
         except json.JSONDecodeError:
+            # Try to find JSON in the response using regex
             json_pattern = r'\{.*\}'
             matches = re.findall(json_pattern, response, re.DOTALL)
             
@@ -86,52 +82,12 @@ class EnhancedDocumentExtractionChain:
                     return json.loads(match)
                 except json.JSONDecodeError:
                     continue
+            
+            # If no valid JSON found, return None
             return None
     
-    def extract_with_quality_check(self, text: str, max_retries: int = 2) -> tuple[StructuredDocument, bool]:
-        """
-        Extract structured data with quality validation
-        Returns: (StructuredDocument, is_quality_acceptable)
-        """
-        attempt = 1
-        
-        while attempt <= max_retries + 1:
-            print(f"🔄 Extraction attempt {attempt}/{max_retries + 1}")
-            
-            # Perform extraction
-            structured_doc = self._perform_extraction(text)
-            
-            if not self.enable_quality_check:
-                return structured_doc, True
-            
-            # Validate quality
-            quality_result = self.quality_agent.validate_structured_document(structured_doc, text)
-            
-            # Print quality report
-            self.quality_agent.print_quality_report(quality_result)
-            
-            # Check if quality is acceptable
-            if quality_result.is_acceptable or attempt > max_retries:
-                if not quality_result.is_acceptable:
-                    print("⚠️ Proceeding with low-quality data after max retries")
-                
-                return structured_doc, quality_result.is_acceptable
-            
-            # If quality is poor, try again with more focused prompt
-            print(f"🔄 Quality check failed ({quality_result.overall_score.value}), retrying...")
-            attempt += 1
-            
-            # Could implement retry logic with different prompts here
-        
-        return structured_doc, False
-    
     def extract(self, text: str) -> StructuredDocument:
-        """Standard extraction method for backward compatibility"""
-        structured_doc, _ = self.extract_with_quality_check(text)
-        return structured_doc
-    
-    def _perform_extraction(self, text: str) -> StructuredDocument:
-        """Core extraction logic"""
+        """Extract structured data from text"""
         try:
             print("🤖 Sending request to Ollama...")
             result = self.chain.run(text=text)
@@ -196,22 +152,21 @@ class EnhancedDocumentExtractionChain:
         
         # Create basic summary
         words = text.split()
-        summary = f"Document contains {len(words)} words and appears to be about {title.lower()}."
+        summary = f"Document contains {len(words)} words and appears to be about protein research and muscle synthesis."
         
         # Basic entity extraction (simple keyword matching)
         entities = []
         
-        # Look for common terms based on title
-        if "protein" in title.lower():
-            protein_terms = ["leucine", "protein", "amino acid", "muscle", "synthesis", "MPS"]
-            for term in protein_terms:
-                if term.lower() in text.lower():
-                    entities.append(ExtractedEntity(
-                        name=term,
-                        type="concept",
-                        context=f"Found in document about {title}",
-                        confidence=0.8
-                    ))
+        # Look for common protein research terms
+        protein_terms = ["leucine", "protein", "amino acid", "muscle", "synthesis", "MPS"]
+        for term in protein_terms:
+            if term.lower() in text.lower():
+                entities.append(ExtractedEntity(
+                    name=term,
+                    type="concept",
+                    context=f"Found in protein research document",
+                    confidence=0.8
+                ))
         
         # Look for author names (basic pattern)
         author_pattern = r'([A-Z][a-z]+ [A-Z][a-z]+)'
@@ -229,9 +184,6 @@ class EnhancedDocumentExtractionChain:
             summary=summary,
             entities=entities,
             facts=[],
-            topics=["general", "document analysis"],
-            document_type="document"
+            topics=["protein research", "muscle synthesis", "nutrition"],
+            document_type="research article"
         )
-
-# For backward compatibility - alias to the original class name
-DocumentExtractionChain = EnhancedDocumentExtractionChain
