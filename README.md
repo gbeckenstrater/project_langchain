@@ -30,8 +30,28 @@ Analyse a webpage:
 ```bash
 python cli_analyzer.py --url https://www.pgatour.com/
 ```
-Analyse a PDF File
+Analyse a PDF File:
 ```bash
 python cli_analyzer.py --file "data/input/OptimalProteinIntakeandFrequncy.pdf"
+
+```
+
+Strict Quality Mode:
+```bash
+# Reject sources with poor data quality
+python cli_analyzer.py --file "data/input/OptimalProteinIntakeandFrequncy.pdf" --strict-quality
+
+```
+
+Advanced options:
+```bash
+# Save results with quality metadata
+python cli_analyzer.py --url https://news.com --save
+
+# Quiet mode (minimal output, quality still checked)
+python cli_analyzer.py --file doc.pdf --quiet
+
+# Help and full options
+python cli_analyzer.py --help
 
 ```
