@@ -43,6 +43,13 @@ python cli_analyzer.py --file "data/input/OptimalProteinIntakeandFrequncy.pdf" -
 
 ```
 
+Run Demo:
+```bash
+# Demo showing quality validation
+python quality_demo.py
+
+```
+
 Advanced options:
 ```bash
 # Save results with quality metadata
